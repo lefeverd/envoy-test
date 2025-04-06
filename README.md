@@ -26,12 +26,9 @@ The simplest approach to delivering dynamic configuration is to place it at a we
 For this, we create a very simple [configmap](./envoy/envoy-cm-dynamic.yaml) which defines the paths (in the `/config/` directory) to the dynamic resources for Listeners (LDS) and Clusters (CDS).  
 This configmap is mounted at `/etc/envoy/envoy.yaml` and used as configuration file when starting envoy.
 
-We can then define the LDS and CDS configuration in another [configmap](./envoy/envoy-cm-lds-cds.yaml), and mount it in the `/config` directory inside the container.
-
-## Hot reload from configmap
-
-Not working yet, see https://ahmet.im/blog/kubernetes-inotify/.
-The files are updated in the pod (symlink is updated to point to the new version) but envoy does not reload.
+We can then define the LDS and CDS configuration in another [configmap](./envoy/envoy-cm-lds-cds.yaml), and mount it in the `/config` directory inside the container.  
+The way kubelet updates a ConfigMap is not by just updating it, but by creating a new versioned directory, and atomically update the symlink (see https://ahmet.im/blog/kubernetes-inotify/).  
+For that reason, we need to watch the complete `/config` directory, using `watch_directory`, as [explained in the docs](https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/core/v3/config_source.proto#config-core-v3-pathconfigsource).
 
 ## Notes
 

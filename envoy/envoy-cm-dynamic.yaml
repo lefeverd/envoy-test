@@ -9,6 +9,12 @@ data:
       cluster: envoy-test
     dynamic_resources:
       lds_config:
-        path: /config/lds.yaml
+        path_config_source:
+          path: /config/lds.yaml
+          watched_directory: 
+            path: /config
       cds_config:
-        path: /config/cds.yaml
+        path_config_source:
+          path: /config/cds.yaml
+          watched_directory: 
+            path: /config

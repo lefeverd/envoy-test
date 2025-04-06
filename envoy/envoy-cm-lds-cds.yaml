@@ -24,11 +24,11 @@ data:
                         routes:
                           - match: { prefix: "/" }
                             route: { cluster: httpbin }
-                      # - name: echoserver
-                      #   domains: ["echoserver.local*"]
-                      #   routes:
-                      #     - match: { prefix: "/" }
-                      #       route: { cluster: echoserver }
+                      - name: echoserver
+                        domains: ["echoserver.local*"]
+                        routes:
+                          - match: { prefix: "/" }
+                            route: { cluster: echoserver }
                   http_filters:
                     - name: envoy.filters.http.router
                       typed_config:
