@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: envoy-config
+data:
+  envoy.yaml: |
+    node:
+      id: envoy-1
+      cluster: envoy-test
+    dynamic_resources:
+      lds_config:
+        path: /config/lds.yaml
+      cds_config:
+        path: /config/cds.yaml
